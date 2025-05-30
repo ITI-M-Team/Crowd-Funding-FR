@@ -1,8 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown ,Button} from 'react-bootstrap';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 import "../assets/css/header.css"
 export default function Header() {
+  const navigate=useNavigate()
+  const handleLogout = async () => {
+    const token = localStorage.getItem('authToken'); 
+
+    try {
+      if (token) {
+        await axios.post('http://localhost:8000/api/logout/', {}, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      localStorage.removeItem('token');
+      navigate('/signup'); 
+    }
+  };
   return (
     <>
         <Navbar  variant="dark" expand="lg">
@@ -13,7 +34,7 @@ export default function Header() {
           <Nav className="mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#projects">Projects</Nav.Link>
+            <Nav.Link href="/projects">Projects</Nav.Link>
             <NavDropdown title="More" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -24,7 +45,8 @@ export default function Header() {
           </Nav>
           <Nav>
             <Nav.Link href="/signup" className="custom-font">Login</Nav.Link>
-            <Nav.Link href="/signup" className="custom-font">Sign Up</Nav.Link>
+            {/* <Nav.Link href="/signup" className="custom-font">Sign Up</Nav.Link> */}
+            <Button className='btn btn-danger' onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -5,6 +5,7 @@ import LayoutsWithHeaderFooter from "../components/LayoutsWithHeaderFooter";
 import Home from "../Pages/Home";
 import Signup2 from "../Pages/Signup2";
 import ForgetPassword from "../Pages/forget_password";
+import Projects from "../Pages/Projects";
 
 
 
@@ -15,6 +16,7 @@ function RouteList() {
             <Route element={<LayoutsWithHeaderFooter/>}>
                 <Route path="/" element={<Home/>} />
                 <Route path="/signup" element={<Signup2/>} />
+                <Route path="/projects" element={<Projects/>} />
                 <Route path="/forget_password" element={<ForgetPassword />} />
             </Route>
         </Routes>

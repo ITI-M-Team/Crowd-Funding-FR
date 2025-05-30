@@ -71,7 +71,7 @@ function Signup2() {
       alert("Login successful!");
 
       // حفظ التوكن أو البيانات إن وجدت
-      // localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.token);
 
       navigate("/");
     } catch (error) {
