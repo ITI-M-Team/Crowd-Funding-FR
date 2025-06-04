@@ -2,13 +2,20 @@ import React from 'react'
 import { Link } from 'react-router';
 import { Navbar, Container, Nav, NavDropdown ,Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 import axios from 'axios';
 import "../assets/css/header.css"
 export default function Header() {
   const navigate=useNavigate()
+  // if not signup or login redir to loginpage
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+   if (!token) {
+      navigate('/signup');  // redirect if no token
+    }
+  }, [navigate]);
   const handleLogout = async () => {
-    const token = localStorage.getItem('authToken'); 
-
+    const token = localStorage.getItem('token');    
     try {
       if (token) {
         await axios.post('http://localhost:8000/api/logout/', {}, {
