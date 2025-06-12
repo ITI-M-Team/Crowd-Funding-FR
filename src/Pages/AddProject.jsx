@@ -36,7 +36,7 @@ function AddProject() {
       
     // Add pro
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/projects/', formdata, {
+      const response = await axios.post('http://127.0.0.1:8001/api/projects/', formdata, {
         headers: {
           'Authorization': `Token ${token}`,
           'Content-Type': 'multipart/form-data',

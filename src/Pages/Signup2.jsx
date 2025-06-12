@@ -31,7 +31,7 @@ function Signup2() {
         formData.append('mobile_phone',phone);
         if (profileImage) formData.append('profile_picture',profileImage)
         try{
-            const response = await axios.post('http://127.0.0.1:8000/api/register/',formData,{headers:{'Content-Type':'multipart/form-data'}});
+            const response = await axios.post('http://127.0.0.1:8001/api/register/',formData,{headers:{'Content-Type':'multipart/form-data'}});
             console.log('Login succussfully',response.data);
             console.log({ firstName, lastName, email, password, confirmPassword, phone, profileImage });
             alert("Signup successful!");
@@ -62,7 +62,7 @@ function Signup2() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/login/", {
+      const response = await axios.post("http://localhost:8001/api/login/", {
         email: loginEmail,
         password: loginPassword,
       });

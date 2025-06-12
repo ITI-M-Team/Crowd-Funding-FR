@@ -18,7 +18,7 @@ export default function Header() {
     const token = localStorage.getItem('token');    
     try {
       if (token) {
-        await axios.post('http://localhost:8000/api/logout/', {}, {
+        await axios.post('http://localhost:8001/api/logout/', {}, {
           headers: {
             Authorization: `Token ${token}`,
           },
