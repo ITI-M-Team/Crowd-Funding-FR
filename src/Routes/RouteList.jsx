@@ -9,6 +9,7 @@ import Projects from "../Pages/Projects";
 import AddProject from "../Pages/AddProject";
 import EditProfileForm from "../Pages/EditProfileForm";
 import EditExtraInfoForm from "../Pages/EditExtraInfoForm";
+import ProfilePage from "../Pages/ProfilePage";
 
 
 
@@ -22,6 +23,7 @@ function RouteList() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
         </Route>
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfileForm />} />
         <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
         <Route path="/signup" element={<Signup2 />} />
