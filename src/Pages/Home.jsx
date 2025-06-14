@@ -6,19 +6,27 @@ import { Link } from 'react-router-dom';
 function Home() {
   const [latestProjects, setLatestProjects] = useState([]);
   const [featuredProjects, setFeaturedProjects] = useState([]);
+  const [topRatedProjects, setTopRatedProjects] = useState([]);
 
   useEffect(() => {
     axios
       .get('http://localhost:8000/api/home-projects/')
       .then((response) => {
         const data = response.data;
+
         setLatestProjects(data.latest_projects || []);
         setFeaturedProjects(data.featured_projects || []);
+
+        const sortedTopRated = (data.top_rated_projects || []).sort(
+          (a, b) => (b.avg_rating || 0) - (a.avg_rating || 0)
+        );
+        setTopRatedProjects(sortedTopRated);
       })
       .catch((error) => {
         console.error('❌ Error fetching projects:', error);
         setLatestProjects([]);
         setFeaturedProjects([]);
+        setTopRatedProjects([]);
       });
   }, []);
 
@@ -31,8 +39,25 @@ function Home() {
 
   return (
     <div className="p-4">
-      {/* Featured Projects */}
-      <h1 className="text-2xl font-bold mb-4">🏗️ Featured Projects</h1>
+      {/* 🔝 Top Rated Projects */}
+      <h1 className="text-2xl font-bold mb-4">⭐ Top Rated Projects</h1>
+      <div className="flex gap-4 overflow-x-auto pb-4">
+        {topRatedProjects.length > 0 ? (
+          topRatedProjects.map((project) => (
+            <div key={project.id} className="min-w-[250px] max-w-[250px] flex-shrink-0">
+              <ProjectsCards project={project} />
+              <p className="text-sm text-gray-600 mt-1 text-center">
+                Rating: {project.avg_rating?.toFixed(1) || 0} ⭐
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">No rated projects available at the moment.</p>
+        )}
+      </div>
+
+      {/* 🏗️ Featured Projects */}
+      <h1 className="text-2xl font-bold mb-4 mt-6">🏗️ Featured Projects</h1>
       <div className="row row-cols-1 row-cols-md-3 g-4 mb-8">
         {featuredProjects.length > 0 ? (
           featuredProjects.map((project) => (
@@ -41,11 +66,11 @@ function Home() {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 col">No featured projects available.</p>
+          <p className="text-gray-500 col">No featured projects currently.</p>
         )}
       </div>
 
-      {/* Latest Projects */}
+      {/* 🆕 Latest Projects */}
       <h1 className="text-2xl font-bold mb-4">🆕 Latest Projects</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {latestProjects.length > 0 ? (
@@ -64,25 +89,25 @@ function Home() {
                   />
                 ) : (
                   <div className="h-32 w-full bg-gray-200 flex items-center justify-center rounded-md mb-3">
-                    <span className="text-sm text-gray-500">No image</span>
+                    <span className="text-sm text-gray-500">No image available</span>
                   </div>
                 )}
                 <h4 className="text-lg font-bold">{proj.title}</h4>
-                <p className="text-sm font-semibold">{proj.totalTarget} L.E</p>
+                <p className="text-sm font-semibold">{proj.totalTarget} EGP</p>
                 <p className="text-xs text-gray-500">
                   {proj.details?.slice(0, 40)}...
                 </p>
                 <Link
                   to={`/projects/${proj.id}`}
-                  className="inline-block mt-3 px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-700 transition"
+                  className="inline-block mt-3 px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-800 transition"
                 >
                   View Details
                 </Link>
               </div>
             );
-          }) 
+          })
         ) : (
-          <p className="text-gray-500">No latest projects found.</p>
+          <p className="text-gray-500">No projects available currently.</p>
         )}
       </div>
     </div>
