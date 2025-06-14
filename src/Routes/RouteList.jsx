@@ -22,10 +22,11 @@ function RouteList() {
           <Route path="/addproject" element={<AddProject />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
-        </Route>
-        <Route path="/profile" element={<ProfilePage />} />
+               <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfileForm />} />
         <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
+        </Route>
+   
         <Route path="/signup" element={<Signup2 />} />
       </Routes>
     </>
