@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProjectsCards from '../components/PeojectsCards';
 import { Link } from 'react-router-dom';
 
 function Home() {
@@ -13,10 +12,8 @@ function Home() {
       .get('http://localhost:8000/api/home-projects/')
       .then((response) => {
         const data = response.data;
-
         setLatestProjects(data.latest_projects || []);
         setFeaturedProjects(data.featured_projects || []);
-
         const sortedTopRated = (data.top_rated_projects || []).sort(
           (a, b) => (b.avg_rating || 0) - (a.avg_rating || 0)
         );
@@ -43,36 +40,86 @@ function Home() {
       <h1 className="text-2xl font-bold mb-4">⭐ Top Rated Projects</h1>
       <div className="flex gap-4 overflow-x-auto pb-4">
         {topRatedProjects.length > 0 ? (
-          topRatedProjects.map((project) => (
-            <div key={project.id} className="min-w-[250px] max-w-[250px] flex-shrink-0">
-              <ProjectsCards project={project} />
-              <p className="text-sm text-gray-600 mt-1 text-center">
-                Rating: {project.avg_rating?.toFixed(1) || 0} ⭐
-              </p>
-            </div>
-          ))
+          topRatedProjects.map((proj) => {
+            const imageUrl = getFullImageUrl(proj.images?.[0]?.image);
+            return (
+              <div
+                key={proj.id}
+                className="min-w-[250px] border rounded-xl shadow p-4 text-center bg-white"
+              >
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt={proj.title}
+                    className="h-32 w-full rounded-md mx-auto mb-3 object-cover"
+                  />
+                ) : (
+                  <div className="h-32 w-full bg-gray-200 flex items-center justify-center rounded-md mb-3">
+                    <span className="text-sm text-gray-500">No image available</span>
+                  </div>
+                )}
+                <h4 className="text-lg font-bold">{proj.title}</h4>
+                <p className="text-sm font-semibold">{proj.totalTarget} EGP</p>
+                <p className="text-xs text-gray-500">{proj.details?.slice(0, 40)}...</p>
+                <p className="text-xs text-yellow-600 mt-1">
+                  ⭐ {proj.avg_rating?.toFixed(1) || 0} / 5
+                </p>
+                <Link
+                  to={`/projects/${proj.id}`}
+                  className="inline-block mt-3 px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-800 transition"
+                >
+                  View Details
+                </Link>
+              </div>
+            );
+          })
         ) : (
-          <p className="text-gray-500">No rated projects available at the moment.</p>
+          <p className="text-gray-500">No top rated projects available.</p>
         )}
       </div>
 
       {/* 🏗️ Featured Projects */}
       <h1 className="text-2xl font-bold mb-4 mt-6">🏗️ Featured Projects</h1>
-      <div className="row row-cols-1 row-cols-md-3 g-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         {featuredProjects.length > 0 ? (
-          featuredProjects.map((project) => (
-            <div className="col" key={project.id}>
-              <ProjectsCards project={project} />
-            </div>
-          ))
+          featuredProjects.map((proj) => {
+            const imageUrl = getFullImageUrl(proj.images?.[0]?.image);
+            return (
+              <div
+                key={proj.id}
+                className="border rounded-xl shadow p-4 text-center bg-white"
+              >
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt={proj.title}
+                    className="h-32 w-full rounded-md mx-auto mb-3 object-cover"
+                  />
+                ) : (
+                  <div className="h-32 w-full bg-gray-200 flex items-center justify-center rounded-md mb-3">
+                    <span className="text-sm text-gray-500">No image available</span>
+                  </div>
+                )}
+                <h4 className="text-lg font-bold">{proj.title}</h4>
+                <p className="text-sm font-semibold">{proj.totalTarget} EGP</p>
+                <p className="text-xs text-gray-500">{proj.details?.slice(0, 40)}...</p>
+                <Link
+                  to={`/projects/${proj.id}`}
+                  className="inline-block mt-3 px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-800 transition"
+                >
+                  View Details
+                </Link>
+              </div>
+            );
+          })
         ) : (
-          <p className="text-gray-500 col">No featured projects currently.</p>
+          <p className="text-gray-500">No featured projects available.</p>
         )}
       </div>
 
       {/* 🆕 Latest Projects */}
       <h1 className="text-2xl font-bold mb-4">🆕 Latest Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {latestProjects.length > 0 ? (
           latestProjects.map((proj) => {
             const imageUrl = getFullImageUrl(proj.images?.[0]?.image);
@@ -94,9 +141,7 @@ function Home() {
                 )}
                 <h4 className="text-lg font-bold">{proj.title}</h4>
                 <p className="text-sm font-semibold">{proj.totalTarget} EGP</p>
-                <p className="text-xs text-gray-500">
-                  {proj.details?.slice(0, 40)}...
-                </p>
+                <p className="text-xs text-gray-500">{proj.details?.slice(0, 40)}...</p>
                 <Link
                   to={`/projects/${proj.id}`}
                   className="inline-block mt-3 px-4 py-2 bg-purple-700 text-white rounded-md text-sm hover:bg-purple-800 transition"
@@ -107,7 +152,7 @@ function Home() {
             );
           })
         ) : (
-          <p className="text-gray-500">No projects available currently.</p>
+          <p className="text-gray-500">No latest projects available.</p>
         )}
       </div>
     </div>
