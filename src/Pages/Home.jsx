@@ -1,7 +1,11 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProjectsCards from '../components/PeojectsCards';
 import { Link } from 'react-router-dom';
+
+import Search from './Search'; 
+
 
 function Home() {
   const [latestProjects, setLatestProjects] = useState([]);
@@ -30,6 +34,7 @@ function Home() {
   };
 
   return (
+  <>
     <div className="p-4">
       {/* Featured Projects */}
       <h1 className="text-2xl font-bold mb-4">🏗️ Featured Projects</h1>
@@ -80,13 +85,20 @@ function Home() {
                 </Link>
               </div>
             );
-          }) 
+          })
         ) : (
           <p className="text-gray-500">No latest projects found.</p>
         )}
       </div>
     </div>
-  );
+
+   
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Welcome to CrowdFund</h1>
+      <Search />
+    </div>
+  </>
+);
 }
 
 export default Home;

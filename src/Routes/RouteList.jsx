@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router"
+import { Route, Routes } from "react-router";
 import SignUp from "../Pages/SignUp";
 import LayoutsWithHeaderFooter from "../components/LayoutsWithHeaderFooter";
 import Home from "../Pages/Home";
@@ -10,8 +10,7 @@ import AddProject from "../Pages/AddProject";
 import EditProfileForm from "../Pages/EditProfileForm";
 import EditExtraInfoForm from "../Pages/EditExtraInfoForm";
 import ProfilePage from "../Pages/ProfilePage";
-
-
+import Search from "../Pages/Search";
 
 function RouteList() {
   return (
@@ -22,7 +21,9 @@ function RouteList() {
           <Route path="/addproject" element={<AddProject />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
+          <Route path="/search" element={<Search />} />
         </Route>
+
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfileForm />} />
         <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
