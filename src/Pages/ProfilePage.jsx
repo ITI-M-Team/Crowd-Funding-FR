@@ -1,5 +1,7 @@
 
 import React, { useEffect, useState } from "react";
+
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -70,7 +72,7 @@ function ProfilePage() {
       {/* Sidebar */}
       <aside className="w-1/4 bg-gradient-to-b from-pink-500 to-purple-700 text-white p-6 flex flex-col items-center">
         <img
-          src={`http://localhost:8000${profile_picture}`}
+          src={`http://localhost:8000/api/${profile_picture}`}
           alt="Profile"
           className="w-24 h-24 rounded-full object-cover mb-4"
         />
@@ -82,14 +84,15 @@ function ProfilePage() {
           <i className="fab fa-instagram" />
         </div>
         <button onClick={() => navigate("/edit-profile")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Edit Profile</button>
-        <button onClick={() => navigate("/AddProject")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Create Project</button>
-        <button onClick={handleDeleteAccount} className="bg-white text-red-600 w-full py-2 rounded font-semibold">Delete Account</button>
+        
         <button
           onClick={() => navigate("/edit-extra-info")}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+          className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold"
         >
           Edit Extra Info
         </button>
+        <button onClick={() => navigate("/AddProject")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Create Project</button>
+        <button onClick={handleDeleteAccount} className="bg-white text-red-600 w-full py-2 rounded font-semibold">Delete Account</button>
       </aside>
 
       {/* Main Content */}
