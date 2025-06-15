@@ -77,7 +77,7 @@ const ProjectDetail = () => {
         <div style={{ display: 'flex', gap: '40px', marginBottom: '40px' }}>
           {/* Left Column */}
           <div style={{ flex: 2 }}>
-            <div style={{ position: 'relative', marginBottom: '20px' , height: '620px', overflow: 'hidden', borderRadius: '12px'}}>
+            <div style={{ position: 'relative', marginBottom: '20px' , height: '600px', overflow: 'hidden', borderRadius: '12px'}}>
               <ImageSliderComponent images={project.images} />
             </div>
 

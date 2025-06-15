@@ -2,13 +2,16 @@ import React from 'react';
 
 const ImageSliderComponent = ({ images }) => {
   return (
-    <div className="w-full overflow-x-auto whitespace-nowrap">
+    <div className="w-full h-full overflow-hidden relative">
       {images.map((img, index) => (
         <img
           key={index}
           src={img.image}
           alt={`Project ${index}`}
-          className="inline-block w-64 h-40 object-cover rounded-xl mr-2"
+          className="w-full h-full object-cover rounded-xl"
+          style={{
+            display: 'block',
+          }}
         />
       ))}
     </div>
