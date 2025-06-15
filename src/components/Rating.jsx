@@ -1,50 +1,84 @@
-// src/components/RatingComponent.jsx
-import React, { useState, useEffect } from "react";
-import axios from "../apis/";
-import { FaStar } from "react-icons/fa";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import axios from '../apis/config';
 
-const RatingComponent = ({ projectId, averageRating, isAuthenticated }) => {
-  const [userRating, setUserRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(null);
+const RatingComponent = ({ projectId, onRated }) => {
+  const [rating, setRating] = useState(0);
+  const [message, setMessage] = useState("");
 
-  const handleRating = async (score) => {
-    if (!isAuthenticated) {
-      toast.error("You must be logged in to rate this project.");
+  const handleSubmit = async () => {
+    if (rating < 1 || rating > 5) {
+      setMessage("Please select a rating between 1 and 5.");
       return;
     }
 
     try {
-      await axios.post("/ratings/", { project_id: projectId, score });
-      setUserRating(score);
-      toast.success("Rating submitted successfully.");
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        toast.error("You have already rated this project.");
-      } else {
-        toast.error("Something went wrong while submitting the rating.");
-      }
+      await axios.post(`/projects/${projectId}/rate/`, { value: rating });
+      setMessage("Thank you for your rating!");
+      onRated();
+    } catch (error) {
+      console.error("Error rating project:", error);
+      setMessage("You have already rated or an error occurred.");
     }
   };
 
+  // Same button style as Donate Now
+  const buttonStyle = {
+    backgroundColor: '#832ef9',
+    color: '#fff',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: 'none',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '14px',
+    transition: 'background-color 0.3s ease',
+  };
+
+  const handleMouseEnter = (e) => {
+    e.target.style.backgroundColor = '#6b24d6'; 
+  };
+
+  const handleMouseLeave = (e) => {
+    e.target.style.backgroundColor = '#832ef9';
+  };
+
   return (
-    <div className="rating-component">
-      <h3 className="text-lg font-semibold">Average Rating: {averageRating?.toFixed(1) || 0} ⭐</h3>
-      <div className="flex items-center space-x-2 mt-2">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <FaStar
-            key={star}
-            className={`cursor-pointer text-2xl transition-colors duration-200 ${
-              (hoverRating || userRating) >= star ? "text-yellow-400" : "text-gray-300"
-            }`}
-            onClick={() => handleRating(star)}
-            onMouseEnter={() => setHoverRating(star)}
-            onMouseLeave={() => setHoverRating(null)}
-          />
+    <div className="my-4 border p-4 rounded-lg bg-white shadow-sm">
+      <label className="block font-semibold mb-2 text-gray-800">⭐ Rate this project:</label>
+      <select
+        value={rating}
+        onChange={e => setRating(Number(e.target.value))}
+        className="border rounded px-3 py-2 text-sm w-full mb-3"
+      >
+        <option value={0}>Select rating</option>
+        {[1, 2, 3, 4, 5].map(n => (
+          <option key={n} value={n}>{n}</option>
         ))}
-      </div>
+      </select>
+
+      <button
+        style={buttonStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleSubmit}
+      >
+        <span
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            padding: '0 6px',
+            borderRadius: '4px',
+          }}
+        >
+          Submit Rating
+        </span>
+      </button>
+
+      {message && (
+        <p className="mt-3 text-sm text-gray-600 italic">{message}</p>
+      )}
     </div>
   );
 };
 
 export default RatingComponent;
+

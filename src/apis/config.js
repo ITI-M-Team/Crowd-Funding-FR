@@ -5,11 +5,11 @@ const instance = axios.create({
   baseURL: "http://localhost:8001/api",
 });
 
-// ✅ ضيفي التوكن تلقائيًا لكل طلب
+// Add Token For every Request
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Token ${token}`;
   }
   return config;
 }, (error) => Promise.reject(error));
