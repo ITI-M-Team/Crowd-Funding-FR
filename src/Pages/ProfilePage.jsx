@@ -83,11 +83,11 @@ function ProfilePage() {
         />
         <h2 className="text-xl font-bold mb-1">{first_name} {last_name}</h2>
         <p className="text-sm">{email}</p>
-        <div className="flex gap-4 my-4">
-          <i className="fab fa-twitter" />
-          <i className="fab fa-facebook" />
-          <i className="fab fa-instagram" />
+        <div className="div">
+          <br>
+        </br>
         </div>
+        
         <button onClick={() => navigate("/edit-profile")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Edit Profile</button>
         <button onClick={() => navigate("/edit-extra-info")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Edit Extra Info</button>
         <button onClick={() => navigate("/AddProject")} className="bg-white text-purple-700 w-full py-2 rounded mb-2 font-semibold">Create Project</button>
@@ -104,11 +104,11 @@ function ProfilePage() {
             <div><strong>Last Name:</strong> {last_name}</div>
             <div><strong>Country:</strong> {extraInfo?.country || "N/A"}</div>
             <div><strong>Mobile:</strong> {mobile_phone || "N/A"}</div>
-            <div><strong>Birthday:</strong> {extraInfo?.birthdate ? new Date(extraInfo.birthdate).toLocaleDateString() : "N/A"}</div>
+            <div><strong>Birthday:</strong> {extraInfo?.birth_date ? new Date(extraInfo.birth_date).toLocaleDateString() : "N/A"}</div>
             <div>
               <strong>Facebook:</strong>{" "}
-              {extraInfo?.facebook_account ? (
-                <a href={extraInfo.facebook_account} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+              {extraInfo?.facebook_profile ? (
+                <a href={extraInfo.facebook_profile} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                   View
                 </a>
               ) : "N/A"}

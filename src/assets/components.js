@@ -142,7 +142,7 @@ export const OverlayContainer = styled.div`
 
 
 export const Overlay = styled.div`
-  background-image: linear-gradient(to right, rgba(250, 118, 95, 0.8), rgba(250, 125, 154, 0.8)), url(${bgImage}); 
+  background-image: linear-gradient(to right, rgba(250, 118, 95, 0.8), #fa7d9a), url(${bgImage}); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
