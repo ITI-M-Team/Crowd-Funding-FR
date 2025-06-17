@@ -6,18 +6,30 @@ function Search() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // ✅ هنا هنخزن الرسائل
 
   const handleSearch = async (e) => {
     e.preventDefault();
+
+    if (!query.trim()) {
+      // ✅ لو المستخدم ضغط من غير كتابة
+      setResults([]);
+      setNoResults(true);
+      setErrorMessage("Please enter a search term.");
+      return;
+    }
+
     try {
       const response = await axios.get(`http://localhost:8000/api/projects/search/?search=${query}`);
       const data = Array.isArray(response.data.results) ? response.data.results : response.data;
       setResults(data);
       setNoResults(data.length === 0);
+      setErrorMessage(data.length === 0 ? "No projects found." : '');
     } catch (error) {
       console.error("Search error:", error);
       setResults([]);
       setNoResults(true);
+      setErrorMessage("An error occurred while searching.");
     }
   };
 
@@ -35,12 +47,21 @@ function Search() {
             />
           </div>
           <div className="text-center">
-            <button className="btn btn-success btn-sm" type="submit">Search</button>
+            <button 
+              className="btn btn-sm text-white" 
+              style={{ backgroundColor: '#646cff' }} 
+              type="submit"
+            >
+              Search
+            </button>
           </div>
         </form>
       </div>
 
-      {noResults && <p className="text-danger text-center">No projects found.</p>}
+      {/* ✅ الرسالة حسب نوع الخطأ */}
+      {noResults && (
+        <p className="text-danger text-center">{errorMessage}</p>
+      )}
 
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {results.map((project) => (
