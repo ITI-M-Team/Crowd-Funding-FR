@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 function EditExtraInfoForm() {
   const [info, setInfo] = useState({
     country: "",
-    facebook_account: "",
-    birthdate: "",
+    facebook_profile: "",
+    birth_date: "",
   });
+ 
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -68,22 +69,22 @@ function EditExtraInfoForm() {
           className="border px-3 py-2 rounded"
         />
         <input
-          name="facebook_account"
+          name="facebook_profile"
           placeholder="Facebook Account URL"
-          value={info.facebook_account}
+          value={info.facebook_profile}
           onChange={handleChange}
           className="border px-3 py-2 rounded"
         />
         <input
-          name="birthdate"
+          name="birth_date"
           type="date"
-          value={info.birthdate || ""}
+          value={info.birth_date || ""}
           onChange={handleChange}
           className="border px-3 py-2 rounded"
         />
         <button
           type="submit"
-          className="bg-primaryPink text-white py-2 rounded disabled:opacity-50"
+          className="bg-primaryPink text-white py-purple rounded disabled:opacity-50"
           disabled={submitting}
         >
           {submitting ? "Updating..." : "Update Extra Info"}

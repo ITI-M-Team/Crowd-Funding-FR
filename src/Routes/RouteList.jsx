@@ -23,11 +23,12 @@ function RouteList() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/project/:id" element={<ProjectDetail />} /> 
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/edit-profile" element={<EditProfileForm />} />
+          <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
         </Route>
-        <Route path="/project/:id" element={<ProjectDetail />} /> 
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/edit-profile" element={<EditProfileForm />} />
-        <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
+       
         <Route path="/signup" element={<Signup2 />} />
       </Routes>
     </>
