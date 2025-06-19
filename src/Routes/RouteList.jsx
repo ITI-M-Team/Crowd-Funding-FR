@@ -18,7 +18,7 @@ function RouteList() {
     <>
       <Routes>
         <Route element={<LayoutsWithHeaderFooter />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/addproject" element={<AddProject />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
@@ -29,7 +29,7 @@ function RouteList() {
           <Route path="/edit-extra-info" element={<EditExtraInfoForm />} />
         </Route>
        
-        <Route path="/signup" element={<Signup2 />} />
+        <Route path="/" element={<Signup2 />} />
       </Routes>
     </>
   );
