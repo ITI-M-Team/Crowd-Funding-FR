@@ -73,7 +73,7 @@ function Signup2() {
       // حفظ التوكن أو البيانات إن وجدت
       localStorage.setItem("token", response.data.token);
 
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
       alert(
